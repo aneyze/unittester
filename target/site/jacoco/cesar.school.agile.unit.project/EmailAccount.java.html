@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EmailAccount.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">unit-tester</a> &gt; <a href="index.source.html" class="el_package">cesar.school.agile.unit.project</a> &gt; <span class="el_source">EmailAccount.java</span></div><h1>EmailAccount.java</h1><pre class="source lang-java linenums">package cesar.school.agile.unit.project;
+
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+
+<span class="fc" id="L9">public class EmailAccount {</span>
+    private String user;
+    private String domain;
+    private String password;
+    private LocalDate lastPasswordUpdate;
+
+    public String getUser() {
+<span class="fc" id="L16">        return user;</span>
+    }
+
+    public void setUser(String user) {
+<span class="fc" id="L20">        this.user = user;</span>
+<span class="fc" id="L21">    }</span>
+
+    public String getDomain() {
+<span class="fc" id="L24">        return domain;</span>
+    }
+
+    public void setDomain(String domain) {
+<span class="fc" id="L28">        this.domain = domain;</span>
+<span class="fc" id="L29">    }</span>
+
+    public String getPassword() {
+<span class="fc" id="L32">        return password;</span>
+    }
+
+    public void setPassword(String password) {
+<span class="fc" id="L36">        this.password = password;</span>
+<span class="fc" id="L37">    }</span>
+
+    public LocalDate getLastPasswordUpdate() {
+<span class="fc" id="L40">        return lastPasswordUpdate;</span>
+    }
+
+    public void setLastPasswordUpdate(LocalDate lastPasswordUpdate) {
+<span class="fc" id="L44">        this.lastPasswordUpdate = lastPasswordUpdate;</span>
+<span class="fc" id="L45">    }</span>
+
+
+    public boolean verifyPasswordExpiration() {
+<span class="fc" id="L49">        LocalDate agora = LocalDate.now();</span>
+
+<span class="fc" id="L51">        long diferencaEmDias = 0;</span>
+<span class="fc" id="L52">        diferencaEmDias = ChronoUnit.DAYS.between( this.lastPasswordUpdate, agora );</span>
+
+<span class="fc bfc" id="L54" title="All 2 branches covered.">        if (diferencaEmDias &lt;= 90) {</span>
+<span class="fc" id="L55">            return true;</span>
+        } else {
+<span class="fc" id="L57">            return false;</span>
+        }
+
+    }
+
+    public boolean isPasswordValid() {
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        if (this.password.length() &gt; 6) {</span>
+<span class="fc" id="L64">            return true;</span>
+        } else {
+<span class="fc" id="L66">            return false;</span>
+        }
+    }
+
+    public boolean isUserValid(){
+<span class="fc" id="L71">        boolean isUserValid = false;</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">        if (this.user != null) {</span>
+<span class="fc" id="L73">            String expression = &quot;^[A-Za-z0-9_.-]{3,16}$&quot;;</span>
+<span class="fc" id="L74">            Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);</span>
+<span class="fc" id="L75">            Matcher matcher = pattern.matcher(user);</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">            if (matcher.matches()) {</span>
+<span class="fc" id="L77">                isUserValid = true;</span>
+            }else{
+<span class="fc" id="L79">                isUserValid = false;</span>
+            }
+        }
+<span class="fc" id="L82">        return isUserValid;</span>
+
+    }
+    public boolean isDomainValid(){
+<span class="fc" id="L86">        boolean isDomainValid = false;</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">        if (this.domain != null) {</span>
+<span class="fc" id="L88">            String expression = &quot;^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\\.[a-zA-Z]{2,}$&quot;;</span>
+<span class="fc" id="L89">            Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);</span>
+<span class="fc" id="L90">            Matcher matcher = pattern.matcher(domain);</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">            if (matcher.matches()) {</span>
+<span class="fc" id="L92">                isDomainValid = true;</span>
+            }
+            else{
+<span class="fc" id="L95">                isDomainValid = false;</span>
+            }
+        }
+<span class="fc" id="L98">        return isDomainValid;</span>
+
+    }
+
+}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

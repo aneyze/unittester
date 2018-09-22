@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EmailClient.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">unit-tester</a> &gt; <a href="index.source.html" class="el_package">cesar.school.agile.unit.project</a> &gt; <span class="el_source">EmailClient.java</span></div><h1>EmailClient.java</h1><pre class="source lang-java linenums">package cesar.school.agile.unit.project;
+
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+<span class="fc" id="L10">public class EmailClient{</span>
+
+    public static final String SENHA_INVÁLIDA = &quot;Senha inválida&quot;;
+    private Collection&lt;EmailAccount&gt; accounts;
+
+    private EmailService emailService;
+
+    public void setAccounts(Collection&lt;EmailAccount&gt; accounts) {
+<span class="fc" id="L18">        this.accounts = accounts;</span>
+<span class="fc" id="L19">    }</span>
+
+    public void setEmailService(EmailService emailS) {
+<span class="fc" id="L22">        emailService = emailS;</span>
+<span class="fc" id="L23">    }</span>
+
+
+    public boolean isValidAddress(String emailAddress){
+<span class="fc" id="L27">        boolean isEmailIdValid = false;</span>
+<span class="fc bfc" id="L28" title="All 2 branches covered.">        if (emailAddress != null ) {</span>
+<span class="fc" id="L29">            String expression = &quot;^[A-Za-z0-9_.-]{3,16}+@[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\\.[a-zA-Z]{2,}$&quot;;</span>
+<span class="fc" id="L30">            Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);</span>
+<span class="fc" id="L31">            Matcher matcher = pattern.matcher(emailAddress);</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">            if (matcher.matches()) {</span>
+<span class="fc" id="L33">                isEmailIdValid = true;</span>
+            }
+        }
+<span class="fc" id="L36">        return isEmailIdValid;</span>
+
+    }
+
+
+
+    public boolean isValidEmail(Email email){
+
+<span class="fc" id="L44">        boolean v1=false;</span>
+<span class="fc" id="L45">        boolean v2=false;</span>
+<span class="fc" id="L46">        boolean v3=false;</span>
+<span class="fc" id="L47">        boolean v4=false;</span>
+<span class="fc" id="L48">        boolean v5=false;</span>
+<span class="fc" id="L49">        boolean v6=false;</span>
+<span class="fc" id="L50">        boolean v7=false;</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        if(email.getCreationDate()!=null){</span>
+<span class="fc" id="L52">            v1=true;</span>
+        }
+        else{
+<span class="fc" id="L55">            v1=false;</span>
+        }
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        if(this.isValidAddress(email.getFrom())){</span>
+<span class="fc" id="L58">            v2=true;</span>
+        }
+        else{
+<span class="fc" id="L61">            v2=false;</span>
+        }
+
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        if(email.getSubject()!=null){</span>
+<span class="fc" id="L65">            v6=true;</span>
+        }
+        else{
+<span class="fc" id="L68">            v6=false;</span>
+        }
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        if(email.getMessage()!=null){</span>
+<span class="fc" id="L71">            v7=true;</span>
+        }
+        else{
+<span class="fc" id="L74">            v7=false;</span>
+        }
+
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        for (String s : email.getCc()) {</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">            if (this.isValidAddress( s )) {</span>
+<span class="fc" id="L79">                v3 = true;</span>
+            }
+            else{
+<span class="nc" id="L82">                v3 = false;</span>
+            }
+<span class="fc" id="L84">        }</span>
+
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        for (String s : email.getTo()) {</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">            if (this.isValidAddress( s )) {</span>
+<span class="fc" id="L88">                v4 = true;</span>
+            }
+            else{
+<span class="nc" id="L91">                v4=false;</span>
+            }
+<span class="fc" id="L93">        }</span>
+
+<span class="fc bfc" id="L95" title="All 2 branches covered.">        for (String s : email.getBcc()) {</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">            if (this.isValidAddress( s )) {</span>
+<span class="fc" id="L97">                v5 = true;</span>
+            }
+            else{
+<span class="nc" id="L100">                v5=false;</span>
+            }
+<span class="fc" id="L102">        }</span>
+<span class="fc bfc" id="L103" title="All 14 branches covered.">        return v1&amp;&amp;v2&amp;&amp;v3&amp;&amp;v4&amp;&amp;v5&amp;&amp;v6&amp;&amp;v7;</span>
+    }
+
+
+
+    public Collection&lt;Email&gt; emailList(EmailAccount account){
+<span class="fc" id="L109">        Collection &lt;Email&gt; arrayEmail = new ArrayList&lt;Email&gt;( );</span>
+<span class="fc" id="L110">        Email email = new Email();</span>
+<span class="fc" id="L111">        emailService = new EmailService() {</span>
+            @Override
+            public boolean sendEmail(Email email) {
+<span class="nc" id="L114">                return false;</span>
+            }
+
+            @Override
+            public Collection&lt;Email&gt; emailList(EmailAccount account) {
+<span class="fc" id="L119">                return null;</span>
+            }
+        };
+<span class="fc bfc" id="L122" title="All 4 branches covered.">        if(account.isPasswordValid() &amp;&amp; account.verifyPasswordExpiration()){</span>
+<span class="fc" id="L123">            arrayEmail.add(email);</span>
+<span class="fc" id="L124">            emailService.emailList( account );</span>
+<span class="fc" id="L125">            return emailService.emailList( account );</span>
+        }
+        else{
+<span class="fc" id="L128">            throw new RuntimeException( SENHA_INVÁLIDA );</span>
+        }
+
+    }
+
+    public boolean createAccount(EmailAccount account){
+<span class="fc" id="L134">        boolean v1 = false;</span>
+<span class="fc" id="L135">        boolean v2 = false;</span>
+<span class="fc" id="L136">        boolean v3 = false;</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">        if(account.isUserValid()){</span>
+<span class="fc" id="L138">            v1=true;</span>
+        }
+        else{
+<span class="fc" id="L141">            v1=false;</span>
+        }
+<span class="fc bfc" id="L143" title="All 2 branches covered.">        if(account.isDomainValid()){</span>
+<span class="fc" id="L144">            v2=true;</span>
+        }
+        else{
+<span class="fc" id="L147">            v2=false;</span>
+        }
+<span class="fc bfc" id="L149" title="All 2 branches covered.">        if(account.isPasswordValid()){</span>
+<span class="fc" id="L150">            v3=true;</span>
+        }
+        else{
+<span class="fc" id="L153">            v3=false;</span>
+        }
+
+        //setando o campo LastPasswordUpdate com a data atual
+<span class="fc" id="L157">        account.setLastPasswordUpdate( LocalDate.now() );</span>
+
+        //adicionando objeto a coleção accounts
+<span class="fc" id="L160">        Collection&lt;EmailAccount&gt; acc = new ArrayList&lt;EmailAccount&gt;();</span>
+<span class="fc" id="L161">        acc.add( account );</span>
+
+<span class="fc bfc" id="L163" title="All 6 branches covered.">        boolean b = v1 &amp;&amp; v2 &amp;&amp; v3;</span>
+<span class="fc" id="L164">        return b;</span>
+    }
+
+    public void sendEmail(Email email) {
+<span class="fc" id="L168">        EmailClient cli = new EmailClient();</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">        if (cli.isValidEmail( email )) {</span>
+<span class="fc" id="L170">            EmailService service = new EmailService() {</span>
+                @Override
+                public boolean sendEmail(Email email) {
+<span class="fc" id="L173">                    return true;</span>
+                }
+
+                @Override
+                public Collection&lt;Email&gt; emailList(EmailAccount account) {
+<span class="nc" id="L178">                    return null;</span>
+                }
+            };
+<span class="fc" id="L181">            service.sendEmail( email );</span>
+<span class="fc" id="L182">        }</span>
+            else {
+<span class="fc" id="L184">                throw new RuntimeException( &quot;Return false!&quot; );</span>
+            }
+
+<span class="fc" id="L187">        }</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
